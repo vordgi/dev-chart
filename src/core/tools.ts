@@ -45,7 +45,7 @@ export const loadGithubActivity = async (username: string, startDate: Date) => {
       if (rowData?.groups) {
         const { day, week, contribs } = rowData?.groups;
         const itemDate = new Date(startDate);
-        itemDate.setDate(itemDate.getDate() + 7 * +week + +day);
+        itemDate.setDate(itemDate.getDate() + 7 * (+week + 1) + +day);
         acc[`${week}_${day}`] = {
           count: +contribs,
           date: itemDate.toDateString(),
@@ -88,11 +88,10 @@ export const formatBaseData = () => {
   const endDate = new Date();
   const startDate = new Date(new Date().setFullYear(endDate.getFullYear() - 1));
   startDate.setDate(startDate.getDate() - startDate.getDay());
-  const startDay = startDate.getDay();
   const totalWeeks = Math.floor(
     (endDate.getTime() - startDate.getTime()) / (7 * 24 * 3600 * 1000)
   );
-  return { endDate, startDate, startDay, totalWeeks };
+  return { endDate, startDate, totalWeeks };
 };
 
 export const formatSummary = (
