@@ -167,10 +167,11 @@ const HomePage = () => {
       <div className="border">
         <svg
           width="100%"
-          viewBox={`0 0 ${baseData.totalWeeks * 14 + 6} 138`}
+          viewBox={`0 0 ${baseData.totalWeeks * 14 + 6} 148`}
           xmlns="http://www.w3.org/2000/svg"
           ref={svgRef}
         >
+          <rect width="100%" height="100%" fill="#ffffff" />
           <g>
             {summary.items.map((item) => (
               <rect
@@ -203,7 +204,7 @@ const HomePage = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                y="106"
+                y="116"
                 x="4"
               >
                 <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
@@ -215,15 +216,17 @@ const HomePage = () => {
                   width="10"
                   height="10"
                   x={i * 12 + 36}
-                  y="106"
+                  y="116"
                   fill={color}
                 >
-                  <title>{`${i ? i * 10 : 1}${
-                    i === 3 ? "+" : `-${(i + 1) * 10 - 1}`
-                  }`}</title>
+                  <title>
+                    {`${i ? i * 10 : 1}${
+                      i === 3 ? "+" : `-${(i + 1) * 10 - 1}`
+                    }`}
+                  </title>
                 </rect>
               ))}
-              <text y="132" x="36" fontWeight={600} fontSize="16">
+              <text y="142" x="36" fontWeight={600} fontSize="16">
                 {summary.totalGithubActivity}
               </text>
             </g>
@@ -239,7 +242,7 @@ const HomePage = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                y="106"
+                y="116"
                 x="104"
               >
                 <path d="m22 13.29-3.33-10a.42.42 0 0 0-.14-.18.38.38 0 0 0-.22-.11.39.39 0 0 0-.23.07.42.42 0 0 0-.14.18l-2.26 6.67H8.32L6.1 3.26a.42.42 0 0 0-.1-.18.38.38 0 0 0-.26-.08.39.39 0 0 0-.23.07.42.42 0 0 0-.14.18L2 13.29a.74.74 0 0 0 .27.83L12 21l9.69-6.88a.71.71 0 0 0 .31-.83Z" />
@@ -250,7 +253,7 @@ const HomePage = () => {
                   width="10"
                   height="10"
                   x={i * 12 + 136}
-                  y="106"
+                  y="116"
                   fill={color}
                 >
                   <title>
@@ -260,13 +263,13 @@ const HomePage = () => {
                   </title>
                 </rect>
               ))}
-              <text y="132" x="136" fontWeight={600} fontSize="16">
+              <text y="142" x="136" fontWeight={600} fontSize="16">
                 {summary.totalGitlabActivity}
               </text>
             </g>
           )}
           <text
-            y="132"
+            y="142"
             x={baseData.totalWeeks * 14 + 2}
             fontSize="10"
             textAnchor="end"
