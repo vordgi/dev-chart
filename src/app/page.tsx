@@ -167,7 +167,7 @@ const HomePage = () => {
       <div className="border">
         <svg
           width="100%"
-          viewBox={`0 0 ${baseData.totalWeeks * 14 + 4} 138`}
+          viewBox={`0 0 ${baseData.totalWeeks * 14 + 6} 138`}
           xmlns="http://www.w3.org/2000/svg"
           ref={svgRef}
         >
@@ -267,7 +267,7 @@ const HomePage = () => {
           )}
           <text
             y="132"
-            x={baseData.totalWeeks * 14}
+            x={baseData.totalWeeks * 14 + 2}
             fontSize="10"
             textAnchor="end"
             fill="#6b7280"
