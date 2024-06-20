@@ -20,8 +20,8 @@ export const loadGithubActivity = async (username: string, startDate: Date) => {
       if (rowData?.groups) {
         const { day, week, contribs } = rowData?.groups;
         const itemDate = new Date(startDate);
-        itemDate.setDate(itemDate.getDate() + 7 * (+week + 1) + +day);
-        acc[`${week}_${day}`] = {
+        itemDate.setDate(itemDate.getDate() + 7 * +week + +day);
+        acc[`${+week - 1}_${day}`] = {
           count: +contribs,
           date: itemDate.toDateString(),
         };
