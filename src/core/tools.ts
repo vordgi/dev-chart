@@ -1,15 +1,17 @@
 import { initWasm, Resvg, ResvgRenderOptions } from "@resvg/resvg-wasm";
 
 export const getWeekStartDate = (date: Date) => {
-  const weekStartDate = new Date();
+  const weekStartDate = new Date(date);
   weekStartDate.setDate(new Date(date).getDate() - date.getDay());
+  weekStartDate.setUTCHours(0, 0, 0, 0);
   return weekStartDate;
 };
 
 export const getWeekEndDate = (date: Date) => {
-  const weekStartDate = new Date();
-  weekStartDate.setDate(new Date(date).getDate() + 7 - date.getDay() - 1);
-  return weekStartDate;
+  const weekEndDate = new Date();
+  weekEndDate.setDate(new Date(date).getDate() + 7 - date.getDay() - 1);
+  weekEndDate.setUTCHours(23, 59, 59, 999);
+  return weekEndDate;
 };
 
 export const getDateAfterWeeks = (date: Date, weekDiff: number) => {

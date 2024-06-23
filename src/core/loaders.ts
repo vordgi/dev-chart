@@ -4,27 +4,43 @@ export const loadGithubActivity = async (username: string, startDate: Date) => {
   try {
     const userPageResp = await fetch(`/github/${username}`);
     const userPage = await userPageResp.text();
-    const userActivityTable = userPage.match(
-      /<table[^>]+ContributionCalendar-grid[^>]+>([\s\S](?!<\/table>))+[\s\S]<\/table>/g
-    );
-    const rows = userActivityTable?.[0].match(
+    const tooltips = userPage.match(
       // @ts-ignore
-      /<tool-tip[^>]+for="contribution-day-component[^>]+>([0-9]+)?/g
+      /<tool-tip[^>]+for="contribution-day-component-[0-9]+-[0-9]+"[^>]*>([0-9]+)?/g
     );
+    const tds =
+      userPage.match(
+        // @ts-ignore
+        /<td[^>]+data-date="[^"]+" id="contribution-day-component-[0-9]+-[0-9]+"[^>]*>/g
+      ) || [];
+    const activityDates = tds.reduce<{ [id: string]: Date }>((acc, td) => {
+      const match = td.match(
+        // @ts-ignore
+        /data-date="(?<date>[^"]+)" id="contribution-day-component-(?<id>[0-9]+-[0-9]+)"/
+      );
+      if (match?.groups) {
+        acc[match.groups.id] = new Date(match.groups.date);
+      }
+      return acc;
+    }, {});
 
-    const rowsFormatted = rows?.reduce<GitActivityItem>((acc, row) => {
+    const rowsFormatted = tooltips?.reduce<GitActivityItem>((acc, row) => {
       const rowData = row.match(
         // @ts-ignore
-        /day-component-(?<day>[0-9])+-(?<week>[0-9]+)"[^>]*>(?<contribs>[0-9]+)?/
+        /day-component-(?<id>[0-9]+-[0-9]+)"[^>]*>(?<contribs>[0-9]+)?/
       );
       if (rowData?.groups) {
-        const { day, week, contribs } = rowData?.groups;
-        const itemDate = new Date(startDate);
-        itemDate.setDate(itemDate.getDate() + 7 * +week + +day);
-        acc[`${+week - 1}_${day}`] = {
-          count: +contribs,
-          date: itemDate.toDateString(),
-        };
+        const { id, contribs } = rowData?.groups;
+        const date = activityDates[id];
+        if (date) {
+          const activityWeek = Math.floor(
+            (date.getTime() - startDate.getTime() + 1) / (7 * 24 * 3600 * 1000)
+          );
+          acc[`${activityWeek}_${date.getDay()}`] = {
+            count: +contribs,
+            date: date.toDateString(),
+          };
+        }
       }
       return acc;
     }, {});
@@ -43,7 +59,7 @@ export const loadGitlabActivity = async (username: string, startDate: Date) => {
       (acc, [dateRaw, contribs]) => {
         const date = new Date(dateRaw);
         const activityWeek = Math.floor(
-          (date.getTime() - startDate.getTime()) / (7 * 24 * 3600 * 1000) - 1
+          (date.getTime() - startDate.getTime()) / (7 * 24 * 3600 * 1000)
         );
         acc[`${activityWeek}_${date.getDay()}`] = {
           count: contribs,

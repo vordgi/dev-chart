@@ -3,12 +3,15 @@ import { GITHUB_COLORS, GITLAB_COLORS } from "./constants";
 import { getDateAfterWeeks, getWeekEndDate, getWeekStartDate } from "./tools";
 
 export const formatBaseData = () => {
-  const endDate = new Date();
-  const startDate = new Date(new Date().setFullYear(endDate.getFullYear() - 1));
-  startDate.setDate(startDate.getDate() - startDate.getDay());
-  const totalWeeks = Math.floor(
-    (endDate.getTime() - startDate.getTime()) / (7 * 24 * 3600 * 1000)
+  const endDate = getWeekEndDate(new Date());
+  const startDate = getWeekStartDate(
+    new Date(new Date().setFullYear(endDate.getFullYear() - 1))
   );
+
+  const totalWeeks =
+    Math.floor(
+      (endDate.getTime() - startDate.getTime()) / (7 * 24 * 3600 * 1000)
+    ) + 1;
   return { endDate, startDate, totalWeeks };
 };
 
