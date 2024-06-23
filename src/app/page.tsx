@@ -70,6 +70,8 @@ const HomePage = () => {
           <a
             href="https://github.com/vordgi/dev-chart"
             className="max-sm:flex-1 text-center border-2 border-neutral-500 rounded-md px-4 py-2 text-neutral-950 hover:border-neutral-800"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -91,6 +93,8 @@ const HomePage = () => {
           <a
             href="https://x.com/vordgi"
             className="max-sm:flex-1 text-center border-2 border-neutral-500 rounded-md px-4 py-2 text-neutral-950 hover:border-neutral-800"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
